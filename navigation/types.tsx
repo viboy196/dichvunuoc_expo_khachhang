@@ -21,6 +21,14 @@ export type RootStackParamList = {
   Login: NavigatorScreenParams<RootLoginParamList> | undefined;
   Contract: undefined;
   Bill: undefined;
+  WaterInvoice: {
+    waterUserId: string;
+    name: string;
+    year: string;
+    month: string;
+  };
+  MyWebView: { title: string; url: string };
+  InfoDetail: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -29,9 +37,22 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 export type RootLoginParamList = {
   one: undefined;
   two: { name: string; no: string };
+  Register: NavigatorScreenParams<RootRegisterParamList> | undefined;
+  InstallWaterScreen: undefined;
+  InstallWaterFamilyScreen: undefined;
+  InstallWaterCompanyScreen: undefined;
+  ViewProcessScreen: undefined;
+  MyWebView: { title: string; url: string };
 };
 export type RootLoginProps<Screen extends keyof RootLoginParamList> =
   NativeStackScreenProps<RootLoginParamList, Screen>;
+
+export type RootRegisterParamList = {
+  Register1: undefined;
+  Register2: { userName: string; fullName: string };
+};
+export type RootRegisterProps<Screen extends keyof RootRegisterParamList> =
+  NativeStackScreenProps<RootRegisterParamList, Screen>;
 
 export type RootTabParamList = {
   TabHome: undefined;

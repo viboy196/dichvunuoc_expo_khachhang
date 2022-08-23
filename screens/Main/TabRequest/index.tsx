@@ -14,11 +14,11 @@ import Layout from "../../../constants/Layout";
 import { blueColorApp, textLight } from "../../../constants/Colors";
 import ButtonText from "../../../components/Item/ButtonText";
 import ItemHoaDon from "../../Bill/ItemBill";
+import { RootTabScreenProps } from "../../../navigation/types";
 
-export default function TabRequest() {
-  const [textPassword, setTextPassword] = useState<string>();
-  const [isChecked, setChecked] = useState(false);
-
+export default function TabRequest({
+  navigation,
+}: RootTabScreenProps<"TabRequest">) {
   return (
     <ScrollView>
       <View
@@ -40,7 +40,7 @@ export default function TabRequest() {
           <View
             style={{
               height: 60,
-              top: 20,
+              top: 35,
               alignItems: "center",
               flexDirection: "row",
               marginHorizontal: 10,
@@ -53,8 +53,8 @@ export default function TabRequest() {
                 paddingLeft: 30,
               }}
             >
-              <Text style={{ fontSize: 18, fontWeight: "500", color: "#fff" }}>
-                Yêu cầu phục vụ
+              <Text style={{ fontSize: 24, fontWeight: "500", color: "#fff" }}>
+                Yêu cầu
               </Text>
             </View>
             <View
@@ -67,27 +67,35 @@ export default function TabRequest() {
               }}
             >
               <View style={{ flex: 1 }} />
-              <View
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  justifyContent: "center",
-                  alignContent: "center",
-                }}
-              >
-                <Ionicons name="chatbubble-outline" size={28} color={"#fff"} />
-              </View>
+              <TouchableOpacity style={{ flex: 1, height: "100%" }}>
+                <View
+                  style={{
+                    flex: 1,
+                    height: "100%",
+                    justifyContent: "center",
+                    alignContent: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="chatbubble-outline"
+                    size={28}
+                    color={"#fff"}
+                  />
+                </View>
+              </TouchableOpacity>
 
-              <View
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  justifyContent: "center",
-                  alignContent: "center",
-                }}
-              >
-                <Ionicons name="call-outline" size={28} color={"#fff"} />
-              </View>
+              <TouchableOpacity style={{ flex: 1, height: "100%" }}>
+                <View
+                  style={{
+                    flex: 1,
+                    height: "100%",
+                    justifyContent: "center",
+                    alignContent: "center",
+                  }}
+                >
+                  <Ionicons name="call-outline" size={28} color={"#fff"} />
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -117,11 +125,17 @@ export default function TabRequest() {
               >
                 <ButtonText
                   imageSource={require("../../../assets/images/main/tabYeuCau/1.png")}
-                  text={""}
+                  text={"Lắp đặt đồng hồ"}
                   colorText={textLight}
                   width={80}
                   height={150}
                   size={64}
+                  onPress={() => {
+                    navigation.navigate("MyWebView", {
+                      title: "Lắp đặt đồng hồ ",
+                      url: "http://dichvunuoc.vn/show/dvn_mobile_dichvu_lapdatdongho",
+                    });
+                  }}
                 />
               </View>
               <View
@@ -138,6 +152,12 @@ export default function TabRequest() {
                   width={100}
                   height={150}
                   size={64}
+                  onPress={() => {
+                    navigation.navigate("MyWebView", {
+                      title: "Thay đổi đường ống cụm đồng hồ nước",
+                      url: "http://dichvunuoc.vn/show/dvn_mobile_dichvu_didoidongho",
+                    });
+                  }}
                 />
               </View>
               <View
@@ -154,6 +174,12 @@ export default function TabRequest() {
                   width={100}
                   height={150}
                   size={64}
+                  onPress={() => {
+                    navigation.navigate("MyWebView", {
+                      title: " Kiểm tra kiểm định đồng hồ ",
+                      url: "http://dichvunuoc.vn/show/dvn_mobile_dichvu_kiemtrakiemdinhdongho",
+                    });
+                  }}
                 />
               </View>
             </View>
@@ -176,6 +202,12 @@ export default function TabRequest() {
                   width={140}
                   height={150}
                   size={64}
+                  onPress={() => {
+                    navigation.navigate("MyWebView", {
+                      title: "Đề nghị tạm ngừng , mở nguồn , cấp nước",
+                      url: "http://dichvunuoc.vn/show/dvn_mobile_dichvu_denghidongmo",
+                    });
+                  }}
                 />
               </View>
               <View
@@ -192,6 +224,12 @@ export default function TabRequest() {
                   width={140}
                   height={150}
                   size={64}
+                  onPress={() => {
+                    navigation.navigate("MyWebView", {
+                      title: "Thay đổi thông tin , ký lại hợp đồng",
+                      url: "http://dichvunuoc.vn/show/dvn_mobile_dichvu_thaydoithongtin",
+                    });
+                  }}
                 />
               </View>
             </View>

@@ -1,4 +1,13 @@
-import { View, Text, TextInput, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  ScrollView,
+  Share,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React from "react";
 import { blueColorApp, textLight } from "../../../constants/Colors";
 import Layout from "../../../constants/Layout";
@@ -6,12 +15,31 @@ import { Ionicons } from "@expo/vector-icons";
 import ButtonText from "../../../components/Item/ButtonText";
 import { RootTabScreenProps } from "../../../navigation/types";
 
+const widthIcon = (Layout.window.width - 20) / 4;
 export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
   const navContractScreen = () => {
     navigation.navigate("Contract");
   };
   const navBillScreen = () => {
     navigation.navigate("Bill");
+  };
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: "dịch vụ nước , chăm sóc khách hàng",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#f3f5fe" }}>
@@ -43,14 +71,14 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                height: "100%",
+                height: 40,
                 width: 60,
                 backgroundColor: "#ececec",
                 borderBottomLeftRadius: 10,
                 borderTopLeftRadius: 10,
               }}
             >
-              <Ionicons name="search-circle" size={48} color={blueColorApp} />
+              <Ionicons name="search-circle" size={32} color={blueColorApp} />
             </View>
             <TextInput
               placeholder={"Hôm nay ,bạn tìm gì ?"}
@@ -58,7 +86,7 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
               style={{
                 paddingLeft: 10,
                 width: 150,
-                height: "100%",
+                height: 40,
                 backgroundColor: "#fff",
                 borderTopRightRadius: 10,
                 borderBottomRightRadius: 10,
@@ -74,7 +102,7 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
               justifyContent: "center",
             }}
           >
-            <View
+            <TouchableOpacity
               style={{
                 flex: 1,
                 height: "100%",
@@ -82,10 +110,18 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
                 alignContent: "center",
               }}
             >
-              <Ionicons name="chatbubble-outline" size={28} color={"#fff"} />
-            </View>
-
-            <View
+              <View
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+                <Ionicons name="chatbubble-outline" size={28} color={"#fff"} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
               style={{
                 flex: 1,
                 height: "100%",
@@ -93,10 +129,18 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
                 alignContent: "center",
               }}
             >
-              <Ionicons name="call-outline" size={28} color={"#fff"} />
-            </View>
-
-            <View
+              <View
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+                <Ionicons name="call-outline" size={28} color={"#fff"} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
               style={{
                 flex: 1,
                 height: "100%",
@@ -104,8 +148,21 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
                 alignContent: "center",
               }}
             >
-              <Ionicons name="notifications-outline" size={28} color={"#fff"} />
-            </View>
+              <View
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+                <Ionicons
+                  name="notifications-outline"
+                  size={28}
+                  color={"#fff"}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <View
@@ -143,10 +200,13 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
               backgroundColor: "#f3f3f3",
               borderRadius: 10,
               margin: 10,
+              shadowOffset: { width: 1, height: 1 },
+              shadowColor: "black",
+              shadowOpacity: 0.5,
             }}
           >
             <Image
-              source={require("../../../assets/images/main/tab1/png-clipart-water-water-surface-wave.png")}
+              source={require("../../../assets/images/LogoApp/nhamay.jpg")}
               resizeMode="cover"
               style={{ width: "100%", height: "100%", borderRadius: 10 }}
             />
@@ -158,11 +218,20 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
               backgroundColor: "#fff",
               borderRadius: 10,
               margin: 10,
-              paddingLeft: 20,
               paddingTop: 10,
+              shadowOffset: { width: 1, height: 1 },
+              shadowColor: "black",
+              shadowOpacity: 0.5,
             }}
           >
-            <Text style={{ color: textLight, fontSize: 16, fontWeight: "600" }}>
+            <Text
+              style={{
+                color: textLight,
+                fontSize: 16,
+                fontWeight: "600",
+                marginLeft: 20,
+              }}
+            >
               Nổi bật
             </Text>
             <View style={{ flexDirection: "row" }}>
@@ -173,8 +242,12 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
                 colorText={textLight}
                 size={28}
                 sizeText={12}
-                width={60}
+                widthText={60}
+                width={widthIcon}
                 height={75}
+                onPress={() => {
+                  Alert.alert("Thông báo", "tính năng đang phát triển");
+                }}
               />
               <ButtonText
                 imageSource={require("../../../assets/images/main/tab1/yeucauphucvu.png")}
@@ -183,8 +256,12 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
                 colorText={textLight}
                 size={28}
                 sizeText={12}
-                width={60}
+                width={widthIcon}
                 height={75}
+                widthText={60}
+                onPress={() => {
+                  navigation.navigate("TabRequest");
+                }}
               />
               <ButtonText
                 imageSource={require("../../../assets/images/main/tab1/gioithieubanbe.png")}
@@ -193,8 +270,10 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
                 colorText={textLight}
                 size={28}
                 sizeText={12}
-                width={60}
+                width={widthIcon}
+                widthText={60}
                 height={75}
+                onPress={onShare}
               />
             </View>
           </View>
@@ -204,56 +283,91 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
               backgroundColor: "#fff",
               borderRadius: 10,
               margin: 10,
-              paddingLeft: 20,
               paddingTop: 10,
+              shadowOffset: { width: 1, height: 1 },
+              shadowColor: "black",
+              shadowOpacity: 0.5,
             }}
           >
-            <Text style={{ color: textLight, fontSize: 16, fontWeight: "600" }}>
+            <Text
+              style={{
+                color: textLight,
+                fontSize: 16,
+                fontWeight: "600",
+                marginLeft: 20,
+              }}
+            >
               Tra Cứu
             </Text>
             <View style={{ flexDirection: "row" }}>
-              <ScrollView horizontal={true}>
-                <ButtonText
-                  imageSource={require("../../../assets/images/main/tab1/gianuoc.png")}
-                  text={"giá nước"}
-                  color={blueColorApp}
-                  colorText={textLight}
-                  size={28}
-                  sizeText={12}
-                  width={60}
-                  height={75}
-                />
-                <ButtonText
-                  imageSource={require("../../../assets/images/main/tab1/chatluongnuoc.png")}
-                  text={"Chất lượng nước"}
-                  color={blueColorApp}
-                  colorText={textLight}
-                  size={28}
-                  sizeText={12}
-                  width={60}
-                  height={75}
-                />
-                <ButtonText
-                  imageSource={require("../../../assets/images/main/tab1/diemthuphi.png")}
-                  text={"Điểm thu phí"}
-                  color={blueColorApp}
-                  colorText={textLight}
-                  size={28}
-                  sizeText={12}
-                  width={60}
-                  height={75}
-                />
-                <ButtonText
-                  imageSource={require("../../../assets/images/main/tab1/lichngungcapnuoc.png")}
-                  text={"Lịch tạm ngưng cấp nước"}
-                  color={blueColorApp}
-                  colorText={textLight}
-                  size={28}
-                  sizeText={12}
-                  width={60}
-                  height={75}
-                />
-              </ScrollView>
+              <ButtonText
+                imageSource={require("../../../assets/images/main/tab1/gianuoc.png")}
+                text={"giá nước"}
+                color={blueColorApp}
+                colorText={textLight}
+                size={28}
+                sizeText={12}
+                widthText={60}
+                width={widthIcon}
+                height={75}
+                onPress={() => {
+                  navigation.navigate("MyWebView", {
+                    title: "Giá nước",
+                    url: "http://dichvunuoc.vn/show/dvn_mobile_timkiem_gianuoc",
+                  });
+                }}
+              />
+              <ButtonText
+                imageSource={require("../../../assets/images/main/tab1/chatluongnuoc.png")}
+                text={"Chất lượng nước"}
+                color={blueColorApp}
+                colorText={textLight}
+                size={28}
+                sizeText={12}
+                widthText={60}
+                width={widthIcon}
+                height={75}
+                onPress={() => {
+                  navigation.navigate("MyWebView", {
+                    title: "Chất lượng nước",
+                    url: "http://dichvunuoc.vn/show/dvn_mobile_timkiem_chatluongnuoc",
+                  });
+                }}
+              />
+              <ButtonText
+                imageSource={require("../../../assets/images/main/tab1/diemthuphi.png")}
+                text={"Điểm thu phí"}
+                color={blueColorApp}
+                colorText={textLight}
+                size={28}
+                sizeText={12}
+                widthText={60}
+                width={widthIcon}
+                height={75}
+                onPress={() => {
+                  navigation.navigate("MyWebView", {
+                    title: "Danh sách điểm thu",
+                    url: "http://dichvunuoc.vn/show/dvn_mobile_timkiem_diemthu",
+                  });
+                }}
+              />
+              <ButtonText
+                imageSource={require("../../../assets/images/main/tab1/lichngungcapnuoc.png")}
+                text={"Lịch tạm ngưng cấp nước"}
+                color={blueColorApp}
+                colorText={textLight}
+                size={28}
+                sizeText={12}
+                widthText={60}
+                width={Layout.window.width / 4}
+                height={75}
+                onPress={() => {
+                  navigation.navigate("MyWebView", {
+                    title: "Lịch tạm ngưng cấp nước",
+                    url: "http://dichvunuoc.vn/show/dvn_mobile_timkiem_lich",
+                  });
+                }}
+              />
             </View>
           </View>
         </View>

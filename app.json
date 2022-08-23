@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "expo_khachhang",
-    "slug": "expo_khachhang",
+    "name": "Dichvunuoc: Khách hàng",
+    "slug": "dichvunuoc_khachHang",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/LogoApp/Logo_256_256.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -19,16 +19,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dichvunuoc.nguoidung"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "image": "./assets/images/LogoApp/Logo_256_256.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.viboy196.dichvunuoc_khachHang"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "image": "./assets/images/splash.png"
     }
   }
 }

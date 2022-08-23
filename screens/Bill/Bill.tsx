@@ -5,6 +5,8 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  FlatList,
+  Alert,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { Text } from "../../components/Themed";
@@ -15,64 +17,104 @@ import { blueColorApp, textLight } from "../../constants/Colors";
 import ItemHoaDon from "./ItemBill";
 import GoBackArrow from "../../components/Item/GoBackArrow";
 import { RootStackScreenProps } from "../../navigation/types";
+import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
+import ApiRequest from "../../utils/api/Main/ApiRequest";
+import { logOut } from "../../redux/features/auth/authSlices";
+
+import Spinner from "react-native-loading-spinner-overlay/lib";
 export default function Bill({ navigation }: RootStackScreenProps<"Bill">) {
+  const tag = "Bill";
+  const { token, waterUserId, waterUserName } = useAppSelector(
+    (state) => state.auth
+  );
+  const [listBill, setListBill] = useState<Array<any>>([]);
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const [textEmty, setTextEmty] = useState<string>("Chưa có hóa Đơn");
+
+  console.log(listBill.length);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (token && waterUserId) {
+      ApiRequest.WaterInvoiceAllByWaterUser(token, waterUserId)
+        .then((data) => {
+          setLoading(false);
+          setListBill(data.result.data);
+          console.log(`${tag} get detail success`);
+        })
+        .catch(() => {
+          setLoading(false);
+          dispatch(logOut());
+        });
+    } else {
+      setLoading(false);
+      setTextEmty("Chưa chọn hợp đồng ");
+      Alert.alert("Thông báo", "Chọn hợp đồng để xem hóa đơn");
+      navigation.navigate("Contract");
+    }
+  }, [dispatch, waterUserId, token]);
   return (
-    <ScrollView>
+    <View
+      style={{
+        width: Layout.window.width,
+        height: Layout.window.height,
+        backgroundColor: "#fff",
+        alignItems: "center",
+      }}
+    >
+      <Spinner
+        visible={loading}
+        textContent={"Loading ..."}
+        textStyle={{ color: "#fff", fontSize: 20 }}
+      />
       <View
         style={{
+          flex: 1,
           width: Layout.window.width,
-          height: Layout.window.height,
-          backgroundColor: "#fff",
-          alignItems: "center",
         }}
       >
-        {/* header */}
-        <View
-          style={{
-            height: 120,
-            width: Layout.window.width,
-            backgroundColor: blueColorApp,
-          }}
-        >
+        {listBill.length > 0 ? (
+          <FlatList
+            data={listBill}
+            renderItem={({ item }) => (
+              <ItemHoaDon
+                item={item}
+                thanhtoan={true}
+                name={waterUserName}
+                onPress={() => {
+                  if (
+                    waterUserId &&
+                    waterUserName &&
+                    item.waterMeterNumber > 0
+                  ) {
+                    navigation.navigate("WaterInvoice", {
+                      waterUserId: waterUserId,
+                      name: waterUserName,
+                      month: item.month,
+                      year: item.year,
+                    });
+                  }
+                }}
+              />
+            )}
+          />
+        ) : (
           <View
             style={{
-              height: 60,
-              left: 0,
-              top: 40,
+              width: Layout.window.width,
+              justifyContent: "center",
               alignItems: "center",
-              flexDirection: "row",
-              marginHorizontal: 10,
+              padding: 20,
             }}
           >
-            <GoBackArrow navigation={navigation} />
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: 24, fontWeight: "700", color: "#fff" }}>
-                Hóa Đơn
-              </Text>
-            </View>
-            <Ionicons name={"ellipsis-vertical"} size={38} color={"#fff"} />
+            <Text style={{ color: textLight, fontSize: 20, fontWeight: "500" }}>
+              {textEmty}
+            </Text>
           </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            width: Layout.window.width,
-          }}
-        >
-          <ScrollView>
-            <ItemHoaDon thanhtoan={true} />
-
-            <ItemHoaDon />
-          </ScrollView>
-        </View>
+        )}
       </View>
-    </ScrollView>
+    </View>
   );
 }
 

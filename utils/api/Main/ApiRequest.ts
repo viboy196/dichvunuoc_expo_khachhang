@@ -54,11 +54,11 @@ export default class ApiRequest {
     console.log(`${tag} data key.length :`, Object.keys(res.data).length);
     return res.data as ExcuteResult;
   };
-  static DetailWaterUserByUser = async (
+  static getAllWaterUserByUser = async (
     token: string,
     userName: string,
   ): Promise<ExcuteResult> => {
-    const tag = 'DetailInfoNguoiDung';
+    const tag = 'getAllWaterUserByUser';
     const url = `/WaterUser/all-by-user?userName=${userName}&v=1.0`;
     console.log(`${tag} url:`, url);
 
@@ -69,7 +69,7 @@ export default class ApiRequest {
       },
     };
     const res = await axios.get(url, config);
-    console.log(`${tag} data key.length :`, res.data);
+    console.log(`${tag} data key.length :`,Object.keys(res.data).length);
     return res.data as ExcuteResult;
   };
   static TollAreaDetail = async (

@@ -1,47 +1,48 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { blueColorApp, textLight } from "../../constants/Colors";
-export default function ItemHopDong() {
+import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
+export default function ItemHopDong({ item , onPress }: { item: any; onPress: () => void }) {
+  const {token, userName} = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
   return (
-    <View
-      style={{
-        height: 200,
-        margin: 10,
-        backgroundColor: "#d9e2fd",
-        borderRadius: 10,
-        paddingLeft: 20,
-        padding: 10,
-      }}
-    >
+    <TouchableOpacity onPress={onPress}>
       <View
         style={{
-          flexDirection: "row",
-
-          alignItems: "center",
+          margin: 10,
+          backgroundColor: "#d9e2fd",
+          borderRadius: 10,
+          paddingLeft: 20,
+          padding: 10,
         }}
       >
-        <Ionicons name="home" size={32} color={blueColorApp} />
-        <View style={{ flex: 1, justifyContent: "center", marginLeft: 10 }}>
-          <Text style={{ color: blueColorApp, fontSize: 16 }}>
-            Hợp Đồng mặc định
-          </Text>
+        <View
+          style={{
+            flexDirection: "row",
 
-          <Text style={{ color: "#000", fontSize: 16 }}>
-            Số hợp đồng : HND41974
-          </Text>
+            alignItems: "center",
+          }}
+        >
+          <Ionicons name="home" size={32} color={blueColorApp} />
+          <View style={{ flex: 1, justifyContent: "center", marginLeft: 10 }}>
+            <Text style={{ color: blueColorApp, fontSize: 16 }}>Hợp Đồng</Text>
+
+            <Text style={{ color: "#000", fontSize: 16 }}>
+              Mã hợp đồng : {item.code}
+            </Text>
+          </View>
+          <Ionicons name="file-tray-full" size={24} color={"#000"} />
         </View>
-        <Ionicons name="file-tray-full" size={24} color={"#000"} />
+        <View style={{ justifyContent: "center", marginVertical: 10 }}>
+          <Text style={{ fontSize: 24, fontWeight: "bold" }}>{item.code}</Text>
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: textLight }}>
+            Người đại diện : {item.name}
+          </Text>
+          <Text style={{ color: textLight }}> địa chỉ : {item.address}</Text>
+        </View>
       </View>
-      <View style={{ flex: 1, justifyContent: "center" }}>
-        <Text style={{ fontSize: 24, fontWeight: "bold" }}>HND41974</Text>
-
-        <Text style={{ color: textLight }}>
-          So 1 , Ngo 10A , TT Khien Truc , Cau Vong , Phuong Duc Thang , Q.Bac
-          Tu Lien , Ha Noi
-        </Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 }

@@ -14,6 +14,9 @@ const linking: LinkingOptions<RootStackParamList> = {
   config: {
     screens: {
       Contract:'Contract',
+      Bill:'Bill',
+      WaterInvoice:'WaterInvoice',
+      MyWebView:'MyWebView',
       Main: {
         screens: {
           TabHome: {
@@ -44,10 +47,22 @@ const linking: LinkingOptions<RootStackParamList> = {
             Login:'Login'
           }},
          
-          two:{}
+          two:'two',
+          Register:{
+            screens:{
+              Register1 :'Register1',
+              Register2 :'Register2',
+            }
+          },
+          InstallWaterScreen:'InstallWaterScreen',
+          
+          InstallWaterFamilyScreen:'InstallWaterFamilyScreen',
+          InstallWaterCompanyScreen:'InstallWaterCompanyScreen',
+          ViewProcessScreen:'ViewProcessScreen',
+
          
         }
-      }
+      },
     },
   },
 };

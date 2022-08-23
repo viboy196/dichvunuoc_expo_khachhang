@@ -6,7 +6,7 @@ import useColorScheme from "../../hooks/useColorScheme";
 import { RootTabParamList, RootTabScreenProps } from "../../navigation/types";
 import TabHomeScreen from "./TabHome/TabHome";
 import TabInfo from "./TabInfo";
-import TabThanhToan from "./TabPayment";
+import TabPayment from "./TabPayment";
 import TabRequest from "./TabRequest";
 
 /**
@@ -37,7 +37,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabPayment"
-        component={TabThanhToan}
+        component={TabPayment}
         options={{
           title: "Thanh Toán",
           headerShown: false,

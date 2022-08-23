@@ -5,6 +5,13 @@ import { RootLoginParamList } from "../../navigation/types";
 
 import LoginScreen from "./Login";
 import LoginAfterScreen from "./LoginAfter";
+import Register from "../register";
+import InstallWaterScreen from "./installWater";
+import InstallWaterFamilyScreen from "./installWater/family";
+import InstallWaterCompanyScreen from "./installWater/company";
+import ViewProcessScreen from "./ViewProcess";
+import WebViewScreen from "./WebView";
+import { blueColorApp } from "../../constants/Colors";
 
 export default function Login() {
   const Stack = createNativeStackNavigator<RootLoginParamList>();
@@ -19,6 +26,75 @@ export default function Login() {
         name="two"
         component={LoginAfterScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="InstallWaterScreen"
+        component={InstallWaterScreen}
+        options={{
+          headerShown: true,
+          title: "Đăng ký lắp nước",
+          headerStyle: { backgroundColor: blueColorApp },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="InstallWaterFamilyScreen"
+        component={InstallWaterFamilyScreen}
+        options={{
+          headerShown: true,
+          title: "Đăng ký lắp nước hộ gia đình",
+          headerStyle: { backgroundColor: blueColorApp },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="InstallWaterCompanyScreen"
+        component={InstallWaterCompanyScreen}
+        options={{
+          headerShown: true,
+          title: "Đăng ký lắp nước cơ quan , tổ chức",
+          headerStyle: { backgroundColor: blueColorApp },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="ViewProcessScreen"
+        component={ViewProcessScreen}
+        options={{
+          title: "Thủ tục cấp nước",
+          headerStyle: { backgroundColor: blueColorApp },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="MyWebView"
+        component={WebViewScreen}
+        options={({ route }) => ({
+          title: `${route.params.title}`,
+          headerStyle: { backgroundColor: blueColorApp },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        })}
       />
     </Stack.Navigator>
   );

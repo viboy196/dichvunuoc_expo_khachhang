@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { View, Text } from "../../components/Themed";
 import useColorScheme from "../../hooks/useColorScheme";
-import Colors from "../../constants/Colors";
+import Colors, { textLight } from "../../constants/Colors";
 import Icon from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import React from "react";
@@ -39,6 +39,8 @@ const Input = (props: {
   const [showPass, setShowPass] = useState(
     secureTextEntry !== undefined ? secureTextEntry : false
   );
+  console.log("showPass", showPass);
+
   const colorScheme = useColorScheme();
   return (
     <View style={styles.container}>
@@ -53,9 +55,8 @@ const Input = (props: {
           style={{
             padding: 5,
             fontSize: 18,
+            color: textLight,
           }}
-          darkColor="#000"
-          lightColor="#000"
         >
           {title}
         </Text>
@@ -76,7 +77,7 @@ const Input = (props: {
           >
             {icon && (
               <Icon
-              // @ts-ignore
+                // @ts-ignore
                 name={icon}
                 size={25}
                 color={color === undefined ? Colors[colorScheme].text : color}
@@ -103,6 +104,7 @@ const Input = (props: {
             value={value}
             keyboardType={keyboardType}
             secureTextEntry={showPass}
+            selectionColor={color}
             onChangeText={(text) => {
               if (onChangeInput != undefined) {
                 onChangeInput(text);
@@ -115,6 +117,7 @@ const Input = (props: {
               setFocus(false);
             }}
           />
+
           {secureTextEntry && (
             <TouchableOpacity
               onPress={() => {
@@ -141,7 +144,8 @@ const Input = (props: {
         style={{
           position: "absolute",
           width: "100%",
-          bottom: -2,
+          height: 20,
+          bottom: -5,
           left: 60,
         }}
       >
@@ -158,8 +162,6 @@ export default Input;
 const styles = StyleSheet.create({
   container: {},
   texForm: {
-    marginLeft: 10,
-    marginRight: 10,
     marginBottom: 15,
     marginTop: 5,
     borderRadius: 10,

@@ -17,6 +17,7 @@ export default function ButtonText({
   width,
   height,
   colorText,
+  widthText,
 }: {
   imageSource?: ImageSourcePropType;
   text?: string;
@@ -28,6 +29,9 @@ export default function ButtonText({
   size?: string | number;
   sizeText?: number;
   width?: string | number | undefined;
+
+  widthText?: string | number | undefined;
+
   height?: string | number | undefined;
 }) {
   return (
@@ -61,7 +65,9 @@ export default function ButtonText({
             }}
           />
         </View>
-        <View style={{ height: "40%" }}>
+        <View
+          style={{ height: "40%", width: widthText ? widthText : undefined }}
+        >
           <Text
             style={{
               textAlign: "center",

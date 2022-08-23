@@ -5,6 +5,8 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  FlatList,
+  Alert,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { Text } from "../../components/Themed";
@@ -15,65 +17,84 @@ import ItemHopDong from "./ItemContract";
 import { RootStackScreenProps } from "../../navigation/types";
 import { navGoBack } from "../../utils/helper/navigationHelper";
 import GoBackArrow from "../../components/Item/GoBackArrow";
-
+import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
+import { WaterUserType } from "../../utils/api/apiTypes";
+import ApiRequest from "../../utils/api/Main/ApiRequest";
+import {
+  ChangeWaterFactory,
+  logOut,
+} from "../../redux/features/auth/authSlices";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 export default function Contract({
   navigation,
 }: RootStackScreenProps<"Contract">) {
+  const tag = "Contract";
+  const { token, userName } = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
+
+  const [listWaterUser, setlistWaterUser] = useState<Array<WaterUserType>>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  useEffect(() => {
+    if (token && userName) {
+      ApiRequest.getAllWaterUserByUser(token, userName.replace(/-/g, ""))
+        .then((data) => {
+          setlistWaterUser(data.result.data);
+          console.log(`${tag} get detail success`, data.result.data);
+          setLoading(false);
+        })
+        .catch(() => {
+          dispatch(logOut());
+          setLoading(false);
+        });
+    }
+  }, [dispatch, token, userName]);
   return (
-    <ScrollView>
+    <View
+      style={{
+        width: Layout.window.width,
+        height: Layout.window.height,
+        backgroundColor: "#fff",
+        alignItems: "center",
+      }}
+    >
+      <Spinner
+        visible={loading}
+        textContent={"Loading ..."}
+        textStyle={{ color: "#fff", fontSize: 20 }}
+      />
       <View
         style={{
+          flex: 1,
           width: Layout.window.width,
-          height: Layout.window.height,
-          backgroundColor: "#fff",
-          alignItems: "center",
         }}
       >
-        {/* header */}
-        <View
-          style={{
-            height: 120,
-            width: Layout.window.width,
-            backgroundColor: blueColorApp,
-          }}
-        >
-          <View
-            style={{
-              height: 60,
-              left: 0,
-              top: 40,
-              alignItems: "center",
-              flexDirection: "row",
-              marginHorizontal: 10,
-            }}
-          >
-            <GoBackArrow navigation={navigation} />
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
+        <FlatList
+          data={listWaterUser}
+          renderItem={({ item }) => (
+            <ItemHopDong
+              item={item}
+              onPress={() => {
+                if (token && userName && item.waterFactoryId && item.name) {
+                  dispatch(
+                    ChangeWaterFactory({
+                      token: token,
+                      userName: userName,
+                      waterFactoryId: item.waterFactoryId,
+                      waterUserId: item.id,
+                      waterUserName: item.name,
+                    })
+                  );
+                  Alert.alert("Chọn hợp đồng", item.code + " " + item.name);
+
+                  navigation.goBack();
+                }
               }}
-            >
-              <Text style={{ fontSize: 24, fontWeight: "700", color: "#fff" }}>
-                Hợp đồng
-              </Text>
-            </View>
-            <Ionicons name={"ellipsis-vertical"} size={38} color={"#fff"} />
-          </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            width: Layout.window.width,
-          }}
-        >
-          <ScrollView>
-            <ItemHopDong />
-          </ScrollView>
-        </View>
+            />
+          )}
+        />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 

@@ -20,15 +20,20 @@ import { validatePassword } from "../../utils/validate";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import {
   loginAsync,
+  setState,
   setStateAuthRemember,
+  UsersState,
 } from "../../redux/features/auth/authSlices";
+import { Styles } from "../../utils/helper/Styles";
+import ApiRequest from "../../utils/api/Main/ApiRequest";
+
+import jwt_decode from "jwt-decode";
 export default function LoginAfter({
   route,
   navigation,
 }: RootLoginProps<"two">) {
-  const { loading, password, checkedAuth, userName } = useAppSelector(
-    (state) => state.auth
-  );
+  const { loading, password, checkedAuth, userName, errorMessage } =
+    useAppSelector((state) => state.auth);
   const { name, no: phoneNo } = route.params;
   const phone = phoneNo.replace(/-/g, "");
   const [textPassword, setTextPassword] = useState<string>(
@@ -37,12 +42,19 @@ export default function LoginAfter({
 
   const [showPassword, setshowPassword] = useState<boolean>(true);
   const [checked, setChecked] = useState(checkedAuth);
-  const [clickLogin, setClickLogin] = React.useState(false);
-
+  const [clickLogin, setClickLogin] = React.useState<number>(0);
+  const [textError, setTextError] = useState<string | undefined>();
+  const [loading1, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const onPressLogin = () => {
+    if (textPassword === "") {
+      setTextError("Nhập mật khẩu");
+    }
+
     if (textPassword && validatePassword(textPassword)) {
-      setClickLogin(true);
+      setClickLogin((old) => {
+        return old + 1;
+      });
       dispatch(
         setStateAuthRemember({
           input: {
@@ -54,55 +66,90 @@ export default function LoginAfter({
         })
       );
       dispatch(loginAsync({ phone: phone, password: textPassword }));
+    } else {
+      setTextError("mật khẩu nhiều hơn 6 ký tự");
     }
   };
 
+  const onPressLogin1 = () => {
+    if (textPassword === "") {
+      setTextError("Nhập mật khẩu");
+    }
+
+    if (textPassword && validatePassword(textPassword)) {
+      setClickLogin((old) => {
+        return old + 1;
+      });
+      setLoading(true);
+      dispatch(
+        setStateAuthRemember({
+          input: {
+            loading: "idle",
+            checkedAuth: checked,
+            userName: phoneNo,
+            password: textPassword,
+          },
+        })
+      );
+      ApiRequest.LoginApi({ phone: phoneNo, password: textPassword })
+        .then((res) => {
+          if (res.code === "00") {
+            setLoading(false);
+            let state = {} as UsersState;
+            const decode = jwt_decode(res.result) as object;
+            try {
+              state = {
+                ...state,
+                loading: "succeeded",
+                token: res.result,
+                // @ts-ignore
+                userName:decode[ "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
+              };
+            } catch {
+              state = {
+                ...state,
+                loading: "succeeded",
+                token: res.result,
+              };
+            }
+            dispatch(setState({ input: state }));
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+      setTextError("mật khẩu nhiều hơn 6 ký tự");
+    }
+  };
+
+  useEffect(() => {
+    console.log("vao day");
+
+    if (errorMessage && clickLogin > 0) {
+      setTextError(errorMessage);
+    }
+  }, [errorMessage, clickLogin]);
   return (
     <ScrollView>
-      <View
-        style={{
-          width: Layout.window.width,
-          height: Layout.window.height,
-          backgroundColor: "#fff",
-          alignItems: "center",
-        }}
-      >
-        {loading === "pending" && clickLogin && (
-          <Spinner
-            visible={true}
-            textContent={"Đăng Nhập ..."}
-            textStyle={{ color: "#fff" }}
-          />
-        )}
+      <View style={Styles.view_Container}>
+        <Spinner
+          visible={loading1}
+          textContent={"Đăng Nhập ..."}
+          textStyle={{ color: "#fff" }}
+        />
         {/* header */}
-        <View
-          style={{
-            flex: 3,
-            width: Layout.window.width,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={Styles.view_LoginAfter_Header}>
           <TouchableOpacity
             onPress={() => {
               if (navigation.canGoBack()) {
                 navigation.goBack();
               }
             }}
-            style={{
-              left: 0,
-              top: 40,
-              position: "absolute",
-            }}
+            style={Styles.view_arrow_back_1}
           >
-            <View
-              style={{
-                width: 80,
-                height: 60,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+            <View style={Styles.view_arrow_back_2}>
               <Ionicons
                 name={"md-arrow-back-outline"}
                 size={38}
@@ -113,7 +160,7 @@ export default function LoginAfter({
           <Image
             source={require("../../assets/images/LogoApp/Logo_256_256.png")}
             resizeMode="cover"
-            style={styles.logoImage}
+            style={Styles.image_logoImage}
           />
           <Text>Xin chào</Text>
           <Text
@@ -155,7 +202,11 @@ export default function LoginAfter({
               // @ts-ignore
               autoFocus={true}
               keyboardType={"default"}
-              onChangeText={setTextPassword}
+              // @ts-ignore
+              onChangeText={(text) => {
+                setTextError(undefined);
+                setTextPassword(text);
+              }}
               secureTextEntry={showPassword}
               value={textPassword}
               pHolder={"Password"}
@@ -188,11 +239,16 @@ export default function LoginAfter({
                 />
               </View>
             </TouchableOpacity>
+            {textError && (
+              <Text style={{ color: "red", position: "absolute", bottom: -25 }}>
+                {textError}
+              </Text>
+            )}
           </View>
           <View
             style={{
               width: Layout.window.width - 40,
-              marginVertical: 20,
+              marginVertical: 30,
               flexDirection: "row",
             }}
           >
@@ -208,14 +264,18 @@ export default function LoginAfter({
               </Text>
             </View>
             <View style={{ flex: 1 }} />
-            <View style={{}}>
+            <TouchableOpacity>
               <Text style={{ fontStyle: "italic", color: textLight }}>
                 Quên mật Khẩu
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <View style={{ flex: 1 }} />
-          <TouchableOpacity style={{ marginBottom: 40 }} onPress={onPressLogin}>
+          <TouchableOpacity
+            disabled={!textPassword}
+            style={{ marginBottom: 40 }}
+            onPress={onPressLogin1}
+          >
             <View
               style={{
                 width: Layout.window.width - 40,

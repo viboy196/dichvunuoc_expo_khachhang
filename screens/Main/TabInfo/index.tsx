@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Text,
+  Linking,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -13,13 +14,13 @@ import Checkbox from "expo-checkbox";
 import ItemCaNhan from "./ItemInfo";
 import Layout from "../../../constants/Layout";
 import { blueColorApp, textLight } from "../../../constants/Colors";
-import { useAppDispatch } from "../../../redux/store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { logOut } from "../../../redux/features/auth/authSlices";
+import { RootTabScreenProps } from "../../../navigation/types";
 
-export default function TabInfo() {
+export default function TabInfo({ navigation }: RootTabScreenProps<"TabInfo">) {
   const dispatch = useAppDispatch();
-  const [textPassword, setTextPassword] = useState<string>();
-  const [isChecked, setChecked] = useState(false);
+  const { userName } = useAppSelector((state) => state.auth);
 
   return (
     <ScrollView>
@@ -34,7 +35,7 @@ export default function TabInfo() {
         {/* header */}
         <View
           style={{
-            height: 200,
+            height: 150,
             width: Layout.window.width,
             backgroundColor: blueColorApp,
             justifyContent: "center",
@@ -44,12 +45,17 @@ export default function TabInfo() {
             style={{ flexDirection: "row", alignItems: "center", padding: 20 }}
           >
             <Image
-              source={require("../../../assets/images/main/tabCaNhan/avatar.jpg")}
-              style={{ width: 80, height: 80, borderRadius: 100 }}
+              source={require("../../../assets/images/LogoApp/Logo_256_256.png")}
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 100,
+                backgroundColor: "#fff",
+              }}
               resizeMode="cover"
             />
             <Text style={{ color: "#fff", fontSize: 24, marginLeft: 10 }}>
-              Nguyễn Văn Đàn
+              {userName}
             </Text>
           </View>
         </View>
@@ -60,11 +66,29 @@ export default function TabInfo() {
           }}
         >
           <ScrollView>
-            <ItemCaNhan name="Thông tin cá nhân" />
+            <ItemCaNhan
+              name="Thông tin cá nhân"
+              iconName="person"
+              onPress={() => {
+                navigation.navigate("InfoDetail");
+              }}
+            />
 
-            <ItemCaNhan name="Thông tin Khác" />
-            <ItemCaNhan name="Thông tin Khác" />
-            <ItemCaNhan name="Điều Khoản Chính sách" />
+            <ItemCaNhan
+              name="Điều Khoản Chính sách"
+              iconName="document-sharp"
+              onPress={() => {
+                Linking.canOpenURL(
+                  "https://dichvunuoc.vn/show/dvn_dieukhoan"
+                ).then((supported) => {
+                  if (supported) {
+                    // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+                    // by some browser in the mobile
+                    Linking.openURL("https://dichvunuoc.vn/show/dvn_dieukhoan");
+                  }
+                });
+              }}
+            />
 
             <ItemCaNhan
               name="Đăng xuất"

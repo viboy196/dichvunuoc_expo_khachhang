@@ -19,7 +19,11 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import { useAppSelector } from "../redux/store/hooks";
 import ContractScreen from "../screens/Contract/Contract";
 import BillScreen from "../screens/Bill/Bill";
+import WaterInvoiceScreen from "../screens/WaterInvoice/WaterInvoice";
+import InfoDetailScreen from "../screens/Main/TabInfo/InfoDetail";
 
+import WebViewScreen from "../screens/Login/WebView";
+import { blueColorApp } from "../constants/Colors";
 export default function Navigation({
   colorScheme,
 }: {
@@ -55,12 +59,62 @@ function RootNavigator() {
         <Stack.Screen
           name="Contract"
           component={ContractScreen}
-          options={{ headerShown: false }}
+          options={{
+            headerStyle: { backgroundColor: blueColorApp },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            title: `Hợp đồng`,
+          }}
         />
         <Stack.Screen
           name="Bill"
           component={BillScreen}
-          options={{ headerShown: false }}
+          options={{
+            headerStyle: { backgroundColor: blueColorApp },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            title: `Hóa đơn`,
+          }}
+        />
+        <Stack.Screen
+          name="WaterInvoice"
+          component={WaterInvoiceScreen}
+          options={({ route }) => ({
+            headerStyle: { backgroundColor: blueColorApp },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            title: `Hóa đơn tiền nước tháng ${route.params.month}`,
+          })}
+        />
+        <Stack.Screen
+          name="MyWebView"
+          component={WebViewScreen}
+          options={({ route }) => ({
+            title: `${route.params.title}`,
+            headerStyle: { backgroundColor: blueColorApp },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          })}
+        />
+        <Stack.Screen
+          name="InfoDetail"
+          component={InfoDetailScreen}
+          options={({ route }) => ({
+            title: `Thông tin cá nhân`,
+            headerStyle: { backgroundColor: blueColorApp },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          })}
         />
       </Stack.Navigator>
     );
