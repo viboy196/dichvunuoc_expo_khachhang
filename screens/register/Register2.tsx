@@ -152,7 +152,7 @@ export default function Register1({
               errorMessages={
                 validatePassword(textPassword)
                   ? undefined
-                  : "Số điện thoại không hợp lệ"
+                  : "Mật khẩu phải nhiều hơn 6 kí tự"
               }
             />
 
@@ -165,7 +165,7 @@ export default function Register1({
               errorMessages={
                 validatePasswordReDo(textPasswordRedo, textPassword)
                   ? undefined
-                  : "Số điện thoại không hợp lệ"
+                  : "Nhập lại mật khẩu không trùng khớp"
               }
             />
           </View>

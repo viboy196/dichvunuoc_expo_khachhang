@@ -2,7 +2,7 @@
   "expo": {
     "name": "Dichvunuoc: Khách hàng",
     "slug": "dichvunuoc_khachHang",
-    "version": "1.0.0",
+    "version": "1.0",
     "orientation": "portrait",
     "icon": "./assets/images/LogoApp/Logo_256_256.png",
     "scheme": "myapp",
@@ -20,7 +20,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dichvunuoc.nguoidung"
+      "bundleIdentifier": "com.dichvunuoc.nguoidung",
+      "buildNumber" : "2"
     },
     "android": {
       "adaptiveIcon": {
