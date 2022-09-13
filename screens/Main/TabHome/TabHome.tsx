@@ -26,7 +26,8 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: "dịch vụ nước , chăm sóc khách hàng",
+        message:
+          "https://qrco.de/bdHEJv?fbclid=IwAR0tNJ34t4d5xy6Hi2KkAeRbK79C3ZqtBCTb0SCSjzgpcx16GTZ_geLLtg8",
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -265,7 +266,7 @@ export default function TabHome({ navigation }: RootTabScreenProps<"TabHome">) {
               />
               <ButtonText
                 imageSource={require("../../../assets/images/main/tab1/gioithieubanbe.png")}
-                text={"giới thiệu bạn bè"}
+                text={"Giới thiệu bạn bè"}
                 color={blueColorApp}
                 colorText={textLight}
                 size={28}

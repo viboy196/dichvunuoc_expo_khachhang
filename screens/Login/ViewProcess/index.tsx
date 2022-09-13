@@ -15,7 +15,7 @@ export default function ViewProcessScreen({
         onPress={() => {
           navigation.navigate("MyWebView", {
             title: " Thủ tục cấp nước gia đình ",
-            url: "http://dichvunuoc.vn/show/dvn_mobile_thutuc_giadinh",
+            url: "https://sites.google.com/view/dichvunuocvn/trang-ch%E1%BB%A7/th%E1%BB%A7-t%E1%BB%A5c-c%E1%BA%A5p-n%C6%B0%E1%BB%9Bc-h%E1%BB%99-gia-%C4%91%C3%ACnh?authuser=0",
           });
         }}
       >
@@ -37,7 +37,7 @@ export default function ViewProcessScreen({
         onPress={() => {
           navigation.navigate("MyWebView", {
             title: " Thủ tục cấp nước cơ quan ",
-            url: "http://dichvunuoc.vn/show/dvn_mobile_thutuc_coquan",
+            url: "https://sites.google.com/view/dichvunuocvn/trang-ch%E1%BB%A7/th%E1%BB%A7-t%E1%BB%A5c-c%E1%BA%A5p-n%C6%B0%E1%BB%9Bc-c%C6%A1-quan?authuser=0",
           });
         }}
       >

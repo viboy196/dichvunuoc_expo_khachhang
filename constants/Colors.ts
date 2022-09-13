@@ -1,6 +1,8 @@
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
-export const blueColorApp = '#3062e5';
+export const blueColorApp = '#2d70e6';
+// export const blueColorApp = '#8cbf00';
+
 export const textLight = '#5a595b';
 
 export default {

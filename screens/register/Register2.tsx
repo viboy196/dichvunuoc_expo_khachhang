@@ -40,6 +40,8 @@ export default function Register1({
 
   const [loading, setLoading] = useState<boolean>(false);
   const registerPress = useCallback(() => {
+    navigation.navigate("Register3", { otp: "123" });
+    return;
     setLoading(true);
     if (
       textPassword &&
@@ -102,7 +104,7 @@ export default function Register1({
             <GoBackArrow navigation={navigation} color={blueColorApp} />
           </View>
           <Image
-            source={require("../../assets/images/LogoApp/Logo_256_256.png")}
+            source={require("../../assets/images/LogoApp/thinkfoodlogo.png")}
             resizeMode="cover"
             style={styles.logoImage}
           />
@@ -114,7 +116,7 @@ export default function Register1({
               marginTop: 10,
             }}
           >
-            DICHVUNUOC
+            Cửa Phật
           </Text>
           <Text
             style={{
@@ -124,7 +126,7 @@ export default function Register1({
               marginTop: 10,
             }}
           >
-            Đăng ký tài khoản
+            Nhập Mật Khẩu
           </Text>
         </View>
         {/* body */}
@@ -155,10 +157,11 @@ export default function Register1({
                   : "Mật khẩu phải nhiều hơn 6 kí tự"
               }
             />
-
+            <View style={{ height: 10 }} />
             <Input
               title={"Nhập lại mật khẩu"}
               value={textPasswordRedo}
+              secureTextEntry={true}
               onChangeInput={setTextPasswordRedo}
               icon="key-outline"
               color={blueColorApp}

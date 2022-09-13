@@ -50,6 +50,7 @@ export type RootLoginProps<Screen extends keyof RootLoginParamList> =
 export type RootRegisterParamList = {
   Register1: undefined;
   Register2: { userName: string; fullName: string };
+  Register3: { otp: string };
 };
 export type RootRegisterProps<Screen extends keyof RootRegisterParamList> =
   NativeStackScreenProps<RootRegisterParamList, Screen>;

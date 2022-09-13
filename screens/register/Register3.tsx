@@ -24,9 +24,9 @@ import {
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import { useAppSelector } from "../../redux/store/hooks";
 import GoBackArrow from "../../components/Item/GoBackArrow";
-export default function Register1({
+export default function Register3({
   navigation,
-}: RootRegisterProps<"Register1">) {
+}: RootRegisterProps<"Register3">) {
   const [textPhone, setTextPhone] = useState<string>();
 
   const [textFullName, setTextFullName] = useState<string>();
@@ -84,7 +84,7 @@ export default function Register1({
             <GoBackArrow navigation={navigation} color={blueColorApp} />
           </View>
           <Image
-            source={require("../../assets/images/LogoApp/thinkfoodlogo.png")}
+            source={require("../../assets/images/LogoApp/1.png")}
             resizeMode="cover"
             style={styles.logoImage}
           />
@@ -96,7 +96,7 @@ export default function Register1({
               marginTop: 10,
             }}
           >
-            Cửa Phật
+            THINKFOOD
           </Text>
           <Text
             style={{
@@ -106,7 +106,7 @@ export default function Register1({
               marginTop: 10,
             }}
           >
-            Đăng ký tài khoản
+            Xác thực tài khoản
           </Text>
         </View>
         {/* body */}
@@ -122,13 +122,13 @@ export default function Register1({
             style={{ marginHorizontal: 20, width: Layout.window.width - 40 }}
           >
             <Input
-              title={"Họ và tên"}
+              title={"Mã Xác Thực"}
               value={textFullName}
               onChangeInput={(text: string) => {
                 console.log(text);
                 setTextFullName(text);
               }}
-              icon="person"
+              icon="checkmark-circle"
               color={blueColorApp}
               errorMessages={
                 validateName(textFullName)
@@ -137,19 +137,6 @@ export default function Register1({
               }
             />
             <View style={{ height: 10 }} />
-            <Input
-              title={"Số điện thoại"}
-              value={textPhone}
-              onChangeInput={setTextPhone}
-              keyboardType={"numeric"}
-              icon="call"
-              color={blueColorApp}
-              errorMessages={
-                validatePhoneNumber(textPhone)
-                  ? undefined
-                  : "Số điện thoại không hợp lệ"
-              }
-            />
           </View>
 
           <TouchableOpacity onPress={nextPress}>
@@ -164,7 +151,7 @@ export default function Register1({
                 justifyContent: "center",
               }}
             >
-              <Text style={{ color: "#fff" }}>Tiếp Tục</Text>
+              <Text style={{ color: "#fff" }}>Xác thực</Text>
             </View>
           </TouchableOpacity>
         </View>

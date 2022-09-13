@@ -25,7 +25,6 @@
     },
     "android": {
       "adaptiveIcon": {
-        "image": "./assets/images/LogoApp/Logo_256_256.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.viboy196.dichvunuoc_khachHang"
