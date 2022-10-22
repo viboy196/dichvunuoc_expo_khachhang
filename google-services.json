@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "597374097490",
+    "project_id": "dichvunuoc-khachhang",
+    "storage_bucket": "dichvunuoc-khachhang.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597374097490:android:dcaf4e1b102ca3a809278b",
+        "android_client_info": {
+          "package_name": "com.viboy196.dichvunuoc_khachHang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597374097490-rs45sgll21jo5v6oilrnhtbn46t9i620.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXdqNSTSjWKvBRHrtsO1vWtPm9hNjUo4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597374097490-rs45sgll21jo5v6oilrnhtbn46t9i620.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

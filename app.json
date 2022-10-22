@@ -21,16 +21,22 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.dichvunuoc.nguoidung",
-      "buildNumber" : "2"
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.viboy196.dichvunuoc_khachHang"
     },
     "web": {
       "image": "./assets/images/splash.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8eb2b8ea-f736-434d-8a4a-7504c28a7ead"
+      }
     }
   }
 }

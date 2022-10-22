@@ -14,6 +14,9 @@ import TabRequest from "./TabRequest";
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
+
+
+
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const BottomTab = createBottomTabNavigator<RootTabParamList>();

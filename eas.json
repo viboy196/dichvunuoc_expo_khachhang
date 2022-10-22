@@ -8,16 +8,19 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
     },
     "production": {}
   },
   "submit": {
     "production": {
-      "ios" :{
+      "ios": {
         "appleId": "lebahongminh@gmail.com",
-        "ascAppId" : "1640007424",
-        "appleTeamId" :"Q2GNRFQMMC"
+        "ascAppId": "1640007424",
+        "appleTeamId": "Q2GNRFQMMC"
       }
     }
   }

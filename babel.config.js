@@ -1,5 +1,6 @@
-module.exports = {
-  "fontawesome-svg-core": {
-    license: "free",
-  },
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ["babel-preset-expo"],
+  };
 };

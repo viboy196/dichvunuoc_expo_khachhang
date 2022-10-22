@@ -270,6 +270,24 @@ export default class ApiRequest {
     console.log(res.data);
     return res.data as ExcuteResult;
   };
+  
+  static AppTokenAdd = async (token:string , input: {token:string , userName:string , system:'android'|'ios'}): Promise<ExcuteResult> => {
+    const url = '/AppToken/add?v=1.0';
+    console.log('url ', url);
+
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorization: `bearer ${token}`,
+        accept: 'text/plain',
+        'Content-Type' : 'application/json'
+      },
+    };
+
+    const res = await axios.post(url, input , config);
+    console.log(res.data);
+    return res.data as ExcuteResult;
+  };
+
 
   static TollAreaByReader = async (data: {
     token: string;

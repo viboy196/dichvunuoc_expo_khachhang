@@ -10,6 +10,7 @@ import Navigation from "./navigation";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "./redux/store/store";
+import Notification from "./test/Notification";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -23,6 +24,7 @@ export default function App() {
         <PersistGate loading={null} persistor={persistor}>
           <SafeAreaProvider>
             <Navigation colorScheme={colorScheme} />
+            <Notification />
             <StatusBar />
           </SafeAreaProvider>
         </PersistGate>
