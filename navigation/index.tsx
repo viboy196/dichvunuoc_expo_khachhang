@@ -7,6 +7,7 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
+  NavigationContainerRef,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
@@ -24,6 +25,18 @@ import InfoDetailScreen from "../screens/Main/TabInfo/InfoDetail";
 
 import WebViewScreen from "../screens/Login/WebView";
 import { blueColorApp } from "../constants/Colors";
+
+export const navigationRef =
+  React.createRef<NavigationContainerRef<RootStackParamList>>();
+
+export function getFullPath(data: {
+  waterUserId: string;
+  name: string;
+  year: string;
+  month: string;
+}) {
+  return navigationRef.current?.navigate("WaterInvoice", data);
+}
 export default function Navigation({
   colorScheme,
 }: {
@@ -31,6 +44,7 @@ export default function Navigation({
 }) {
   return (
     <NavigationContainer
+      ref={navigationRef}
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >

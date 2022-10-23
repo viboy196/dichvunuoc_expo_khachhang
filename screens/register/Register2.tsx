@@ -44,13 +44,14 @@ export default function Register1({
     return;
     setLoading(true);
     if (
-      textPassword &&
+      textPassword !== undefined &&
       validatePassword(textPassword) &&
       textPasswordRedo &&
       validatePasswordReDo(textPassword, textPasswordRedo)
-    )
+    ) {
       ApiRequest.RegisterApi({
         fullName: fullName,
+        // @ts-ignore
         passwordHash: textPassword,
         userName: userName,
       })
@@ -67,6 +68,7 @@ export default function Register1({
         .catch(() => {
           setLoading(false);
         });
+    }
   }, [textPassword, textPasswordRedo]);
   return (
     <ScrollView>

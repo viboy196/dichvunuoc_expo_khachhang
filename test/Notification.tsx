@@ -2,7 +2,9 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useRef } from "react";
 import { Alert, Platform } from "react-native";
+import { getFullPath } from "../navigation";
 import { logOut } from "../redux/features/auth/authSlices";
+import { setStateNotification } from "../redux/features/notification/NotificationSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
 import ApiRequest from "../utils/api/Main/ApiRequest";
 
@@ -16,12 +18,19 @@ Notifications.setNotificationHandler({
 
 export default function Notification() {
   const [expoPushToken, setExpoPushToken] = useState<string>();
+
   const { token, userName } = useAppSelector((s) => s.auth);
+
+  const noti = useAppSelector((s) => s.noti);
+
   const dispatch = useAppDispatch();
   const [notification, setNotification] =
     useState<Notifications.Notification>();
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
+
+  //add this
+  const lastNotificationResponse = Notifications.useLastNotificationResponse();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
@@ -47,7 +56,12 @@ export default function Notification() {
     };
   }, []);
   useEffect(() => {
-    if (expoPushToken && token && userName) {
+    if (
+      expoPushToken &&
+      token &&
+      userName &&
+      noti.expoToken !== expoPushToken
+    ) {
       ApiRequest.AppTokenAdd(token, {
         token: expoPushToken,
         system: Platform.OS === "android" ? "android" : "ios",
@@ -57,6 +71,9 @@ export default function Notification() {
           if (res.code === "00") {
             console.log("register token successs");
             Alert.alert("success", expoPushToken);
+            dispatch(
+              setStateNotification({ input: { expoToken: expoPushToken } })
+            );
           }
         })
         .catch((error) => {
@@ -65,6 +82,20 @@ export default function Notification() {
         });
     }
   }, [expoPushToken, token, userName]);
+  useEffect(() => {
+    if (lastNotificationResponse) {
+      //console.log(lastNotificationResponse);
+
+      //get the route
+      const data = JSON.stringify(
+        lastNotificationResponse.notification.request.content.data
+      );
+        console.log();
+        
+      //use some function to return the correct screen by route
+      // getFullPath(JSON.parse(data));
+    }
+  }, [lastNotificationResponse]);
 
   return <></>;
 }

@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
-import Navigation from "./navigation";
+import Navigation, { navigationRef } from "./navigation";
 
 // redux
 import { Provider } from "react-redux";
@@ -23,7 +23,7 @@ export default function App() {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <SafeAreaProvider>
-            <Navigation colorScheme={colorScheme} />
+            <Navigation colorScheme={colorScheme}  />
             <Notification />
             <StatusBar />
           </SafeAreaProvider>

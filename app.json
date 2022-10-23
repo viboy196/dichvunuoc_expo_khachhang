@@ -4,6 +4,15 @@
     "slug": "dichvunuoc_khachHang",
     "version": "1.0",
     "orientation": "portrait",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/LogoApp/logo_notification.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
     "icon": "./assets/images/LogoApp/Logo_256_256.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
@@ -15,9 +24,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.dichvunuoc.nguoidung",
